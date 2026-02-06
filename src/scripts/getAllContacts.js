@@ -1,3 +1,15 @@
-export const getAllContacts = async () => {};
+import { readContacts } from '../utils/readContacts.js';
 
-console.log(await getAllContacts());
+export const getAllContacts = async () => {
+  const contacts = await readContacts();
+  return contacts;
+};
+
+const isDirectRun =
+  process.argv[1] &&
+  /getallcontacts(\.js)?$/i.test(process.argv[1].replace(/\\/g, '/'));
+
+if (isDirectRun) {
+  const all = await getAllContacts();
+  console.table(all);
+}
